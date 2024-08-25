@@ -26,225 +26,362 @@ const Login = () => {
   }
 
   return (
-    <Container
-      component={"main"}
-      maxWidth="xs"
-      sx={{
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}>
-      <Paper
-        elevation={3}
+    <div
+      style={{
+        backgroundImage: `
+      linear-gradient(90deg, #fbeee0 0%, #fbefe3 25%, #fbf1e6 50%, #fcf3e9 75%, #fcf4ec 100%)
+    `,
+      }}
+    >
+      <Container
+        component={"main"}
+        maxWidth="xs"
         sx={{
-          padding: 4,
+          height: "100vh",
           display: "flex",
-          flexDirection: "column",
+          justifyContent: "center",
           alignItems: "center",
-        }}
-      >
-        {
-          isLogin ? (
-            <>
-              <Typography variants="h5">
-                Login
-              </Typography>
-              <form
-                style={{
-                  width: "100%",
-                  marginTop: "1rem",
-                }}
-                onSubmit={handleLogin}
-              >
-                <TextField
-                  required
-                  fullWidth
-                  label="Username"
-                  margin="normal"
-                  variant="outlined"
-                  value={username.value}
-                  onChange={username.changeHandler}
-                />
-                <TextField
-                  required
-                  fullWidth
-                  label="Password"
-                  margin="normal"
-                  variant="outlined"
-                  type='password'
-                  value={password.value}
-                  onChange={password.changeHandler}
-                />
-                <Button
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  fullWidth
-                  sx={{
-                    marginTop: "1rem"
-                  }}
-                >
-                  Login
-                </Button>
-
+        }}>
+        <Paper
+          elevation={3}
+          sx={{
+            padding: 4,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            backgroundColor: "#F5F5FA"
+          }}
+        >
+          {
+            isLogin ? (
+              <>
                 <Typography
-                  textAlign={"center"}
-                  m={"1rem"}
-                >
-                  or
-                </Typography>
-
-                <Button
-                  variant="text"
-                  fullWidth
-                  type="submit"
-                  onClick={toggleLogin}
-                >
-                  Sign Up Instead
-                </Button>
-              </form>
-            </>
-          ) : (
-            <>
-              <Typography variants="h5">
-                Sign Up
-              </Typography>
-              <form
-                style={{
-                  width: "100%",
-                  marginTop: "1rem",
-                }}
-                onSubmit={handleSignUp}
-              >
-                <Stack
-                  position={"relative"}
-                  width={"10rem"}
-                  margin={"auto"}
-                >
-                  <Avatar
-                    sx={{
-                      width: "10rem",
-                      height: "10rem",
-                      objectFit: "contain",
-                    }}
-                    src={avatar.preview}
-                  />
-
-
-                  <IconButton
-                    sx={{
-                      position: "absolute",
-                      bottom: "0",
-                      right: "0",
-                      color: "white",
-                      bgcolor: "rgba(0, 0, 0, 0.5)",
-                      ":hover": {
-                        bgcolor: "rgba(0, 0, 0, 0.7)",
-                      }
-                    }}
-                    component="label"
-                  >
-                    <>
-                      <CameraAltIcon />
-                      <VisuallyHiddenInput
-                        type='file'
-                        onChange={avatar.changeHandler}
-                      />
-                    </>
-                  </IconButton>
-                </Stack>
-                {
-                  avatar.error && (
-                    <Typography
-                      m={"1rem auto"}
-                      width={"fit-content"}
-                      display={"block"}
-                      color="error"
-                      variant="caption">
-                      {avatar.error}
-                    </Typography>
-                  )
-                }
-
-                <TextField
-                  required
-                  fullWidth
-                  label="Name"
-                  margin="normal"
-                  variant="outlined"
-                  value={name.value}
-                  onChange={name.changeHandler}
-                />
-                <TextField
-                  required
-                  fullWidth
-                  label="Bio"
-                  margin="normal"
-                  variant="outlined"
-                  value={bio.value}
-                  onChange={bio.changeHandler}
-                />
-                <TextField
-                  required
-                  fullWidth
-                  label="Username"
-                  margin="normal"
-                  variant="outlined"
-                  value={username.value}
-                  onChange={username.changeHandler}
-                />
-                {
-                  username.error && (
-                    <Typography color="error" variant="caption">
-                      {username.error}
-                    </Typography>
-                  )
-                }
-                <TextField
-                  required
-                  fullWidth
-                  label="Password"
-                  margin="normal"
-                  variant="outlined"
-                  type='password'
-                  value={password.value}
-                  onChange={password.changeHandler}
-                />
-
-                <Button
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  fullWidth
                   sx={{
-                    marginTop: "1rem"
+                    fontWeight: "bold",
+                    color: "#2a1f62",
+                    fontFamily: `"Cascadia Code", Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace`,
+                    fontSize: "2rem",
+                  }}>
+                  Login
+                </Typography>
+                <form
+                  style={{
+                    width: "100%",
+                    marginTop: "1rem",
+                  }}
+                  onSubmit={handleLogin}
+                >
+                  <TextField
+                    required
+                    fullWidth
+                    label="Username"
+                    margin="normal"
+                    variant="outlined"
+                    value={username.value}
+                    onChange={username.changeHandler}
+                  />
+                  <TextField
+                    required
+                    fullWidth
+                    label="Password"
+                    margin="normal"
+                    variant="outlined"
+                    type='password'
+                    value={password.value}
+                    onChange={password.changeHandler}
+                  />
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    fullWidth
+                    sx={{
+                      marginTop: "1rem",
+                      backgroundColor: "#fbeee0",
+                      border: "2px solid #422800",
+                      borderRadius: "30px",
+                      boxShadow: "4px 4px 0 0 #422800",
+                      color: "#422800",
+                      cursor: "pointer",
+                      display: "inline-block",
+                      fontWeight: 600,
+                      fontSize: "18px",
+                      padding: "0 18px",
+                      lineHeight: "50px",
+                      textAlign: "center",
+                      textDecoration: "none",
+                      userSelect: "none",
+                      WebkitUserSelect: "none",
+                      touchAction: "manipulation",
+                      "&:hover": {
+                        backgroundColor: "#fff",
+                      },
+                      "&:active": {
+                        boxShadow: "2px 2px 0 0 #422800",
+                        transform: "translate(2px, 2px)",
+                      },
+                      "@media (min-width: 768px)": {
+                        minWidth: "120px",
+                        padding: "0 25px",
+                      },
+                    }}
+                  >
+                    Login
+                  </Button>
+
+                  <Typography
+                    textAlign={"center"}
+                    m={"1rem"}
+                    sx={{
+                      fontWeight: "bold",
+                      color: "#2a1f62",
+                      fontFamily: `"Cascadia Code", Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace`,
+                      fontSize: "1rem", // Bigger size
+                    }}
+                  >
+                    or
+                  </Typography>
+
+                  <Button
+                    variant="text"
+                    fullWidth
+                    type="submit"
+                    onClick={toggleLogin}
+                    sx={{
+                      alignItems: "center",
+                      background: "#FFFFFF",
+                      border: "0 solid #E2E8F0",
+                      boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+                      boxSizing: "border-box",
+                      color: "#1A202C",
+                      display: "inline-flex",
+                      fontFamily: "Inter, sans-serif",
+                      fontSize: "1rem",
+                      fontWeight: 700,
+                      height: "56px",
+                      justifyContent: "center",
+                      lineHeight: "24px",
+                      overflowWrap: "break-word",
+                      padding: "24px",
+                      textDecoration: "none",
+                      width: "100%",
+                      borderRadius: "8px",
+                      cursor: "pointer",
+                      userSelect: "none",
+                      WebkitUserSelect: "none",
+                      touchAction: "manipulation",
+                    }}
+                  >
+                    Sign Up Instead
+                  </Button>
+                </form>
+              </>
+            ) : (
+              <>
+                <Typography
+                  variants="h5"
+                  sx={{
+                    fontWeight: "bold",
+                    color: "#2a1f62",
+                    fontFamily: `"Cascadia Code", Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace`,
+                    fontSize: "2rem", // Bigger size
                   }}
                 >
                   Sign Up
-                </Button>
-
-                <Typography
-                  textAlign={"center"}
-                  m={"1rem"}
-                >
-                  or
                 </Typography>
-
-                <Button
-                  variant="text"
-                  fullWidth
-                  type="submit"
-                  onClick={toggleLogin}
+                <form
+                  style={{
+                    width: "100%",
+                    marginTop: "1rem",
+                  }}
+                  onSubmit={handleSignUp}
                 >
-                  Login Instead
-                </Button>
-              </form>
-            </>
-          )
-        }
-      </Paper>
-    </Container>
+                  <Stack
+                    position={"relative"}
+                    width={"10rem"}
+                    margin={"auto"}
+                  >
+                    <Avatar
+                      sx={{
+                        width: "10rem",
+                        height: "10rem",
+                        objectFit: "contain",
+                      }}
+                      src={avatar.preview}
+                    />
+
+
+                    <IconButton
+                      sx={{
+                        position: "absolute",
+                        bottom: "0",
+                        right: "0",
+                        color: "white",
+                        bgcolor: "rgba(0, 0, 0, 0.5)",
+                        ":hover": {
+                          bgcolor: "rgba(0, 0, 0, 0.7)",
+                        }
+                      }}
+                      component="label"
+                    >
+                      <>
+                        <CameraAltIcon />
+                        <VisuallyHiddenInput
+                          type='file'
+                          onChange={avatar.changeHandler}
+                        />
+                      </>
+                    </IconButton>
+                  </Stack>
+                  {
+                    avatar.error && (
+                      <Typography
+                        m={"1rem auto"}
+                        width={"fit-content"}
+                        display={"block"}
+                        color="error"
+                        variant="caption">
+                        {avatar.error}
+                      </Typography>
+                    )
+                  }
+
+                  <TextField
+                    required
+                    fullWidth
+                    label="Name"
+                    margin="normal"
+                    variant="outlined"
+                    value={name.value}
+                    onChange={name.changeHandler}
+                  />
+                  <TextField
+                    required
+                    fullWidth
+                    label="Bio"
+                    margin="normal"
+                    variant="outlined"
+                    value={bio.value}
+                    onChange={bio.changeHandler}
+                  />
+                  <TextField
+                    required
+                    fullWidth
+                    label="Username"
+                    margin="normal"
+                    variant="outlined"
+                    value={username.value}
+                    onChange={username.changeHandler}
+                  />
+                  {
+                    username.error && (
+                      <Typography color="error" variant="caption">
+                        {username.error}
+                      </Typography>
+                    )
+                  }
+                  <TextField
+                    required
+                    fullWidth
+                    label="Password"
+                    margin="normal"
+                    variant="outlined"
+                    type='password'
+                    value={password.value}
+                    onChange={password.changeHandler}
+                  />
+
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    fullWidth
+                    sx={{
+                      marginTop: "1rem",
+                      backgroundColor: "#fbeee0",
+                      border: "2px solid #422800",
+                      borderRadius: "30px",
+                      boxShadow: "4px 4px 0 0 #422800",
+                      color: "#422800",
+                      cursor: "pointer",
+                      display: "inline-block",
+                      fontWeight: 600,
+                      fontSize: "18px",
+                      padding: "0 18px",
+                      lineHeight: "50px",
+                      textAlign: "center",
+                      textDecoration: "none",
+                      userSelect: "none",
+                      WebkitUserSelect: "none",
+                      touchAction: "manipulation",
+                      "&:hover": {
+                        backgroundColor: "#fff",
+                      },
+                      "&:active": {
+                        boxShadow: "2px 2px 0 0 #422800",
+                        transform: "translate(2px, 2px)",
+                      },
+                      "@media (min-width: 768px)": {
+                        minWidth: "120px",
+                        padding: "0 25px",
+                      },
+                    }}
+                  >
+                    Sign Up
+                  </Button>
+
+                  <Typography
+                    textAlign={"center"}
+                    m={"1rem"}
+                    sx={{
+                      fontWeight: "bold",
+                      color: "#2a1f62",
+                      fontFamily: `"Cascadia Code", Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace`,
+                      fontSize: "1rem", // Bigger size
+                    }}
+                  >
+                    or
+                  </Typography>
+
+                  <Button
+                    variant="text"
+                    fullWidth
+                    type="submit"
+                    onClick={toggleLogin}
+                    sx={{
+                      alignItems: "center",
+                      background: "#FFFFFF",
+                      border: "0 solid #E2E8F0",
+                      boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+                      boxSizing: "border-box",
+                      color: "#1A202C",
+                      display: "inline-flex",
+                      fontFamily: "Inter, sans-serif",
+                      fontSize: "1rem",
+                      fontWeight: 700,
+                      height: "56px",
+                      justifyContent: "center",
+                      lineHeight: "24px",
+                      overflowWrap: "break-word",
+                      padding: "24px",
+                      textDecoration: "none",
+                      width: "100%",
+                      borderRadius: "8px",
+                      cursor: "pointer",
+                      userSelect: "none",
+                      WebkitUserSelect: "none",
+                      touchAction: "manipulation",
+                    }}
+                  >
+                    Login Instead
+                  </Button>
+                </form>
+              </>
+            )
+          }
+        </Paper>
+      </Container>
+    </div>
   )
 }
 
