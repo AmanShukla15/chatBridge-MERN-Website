@@ -1,8 +1,8 @@
-import { AppBar, Box, IconButton, Toolbar, Tooltip, Typography } from '@mui/material'
+import { AppBar, Backdrop, Box, IconButton, Toolbar, Tooltip, Typography } from '@mui/material'
 import { lazy, Suspense, useState } from 'react'
-import { orange } from '../../constants/color'
 import { Add as AddIcon, Group as GroupIcon, Logout as LogoutIcon, Menu as MenuIcon, Search as SearchIcon, Notifications as NotificationIcon } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
+import {LayoutLoader} from './Loaders'
 
 const SearchDialog = lazy(()=> import("../specific/Search"))
 const NotificationDialog = lazy(()=> import("../specific/Notifications")) 
@@ -46,7 +46,7 @@ const Header = () => {
                 <AppBar
                     position="static"
                     sx={{
-                        bgcolor: orange,
+                        bgcolor: "#25b09b",
                     }}
                 >
                     <Toolbar>
@@ -115,7 +115,7 @@ const Header = () => {
             {
                 isSearch && (
                     <Suspense
-                        fallback={<div>Loading...</div>}
+                        fallback={<Backdrop open/>}
                     >
                         <SearchDialog />
                     </Suspense>
@@ -124,7 +124,7 @@ const Header = () => {
             {
                 isNotification && (
                     <Suspense
-                        fallback={<div>Loading...</div>}
+                        fallback={<Backdrop open/>}
                     >
                         <NotificationDialog />
                     </Suspense>
@@ -133,7 +133,7 @@ const Header = () => {
             {
                 isNewGroup && (
                     <Suspense
-                        fallback={<div>Loading...</div>}
+                        fallback={<Backdrop open/>}
                     >
                         <NewGroupDialog />
                     </Suspense>

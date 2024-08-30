@@ -1,10 +1,23 @@
-import React from 'react';
 import Header from './Header';
 import Title from '../shared/Title';
 import { Grid } from '@mui/material';
+import ChatList from '../specific/ChatList';
+import { sampleChats } from '../../constants/sampleData';
+import { useParams } from 'react-router-dom';
+import Profile from '../specific/Profile';
 
-const AppLayout = () => WrappedComponent => {
-    const WithLayout = (props) => {
+const AppLayout = () => (WrappedComponent) => {
+   
+    return (props) => {
+        const params = useParams();
+    
+        const chatId = params.chatId;
+
+        const handleDeleteChat = (e, _id, groupChat) => {
+            e.preventDefault();
+            console.log("HandleDeleteChat");
+        }
+
         return (
             <>
                 <Title />
@@ -22,7 +35,11 @@ const AppLayout = () => WrappedComponent => {
                         }}
                         height={"100%"}
                     >
-                        First
+                        <ChatList
+                            chats={sampleChats}
+                            chatId={chatId}
+                            handleDeleteChat={handleDeleteChat}
+                        />
                     </Grid>
 
                     <Grid
@@ -44,26 +61,17 @@ const AppLayout = () => WrappedComponent => {
                             display: {
                                 xs: "none", md: "block"
                             },
-                            padding:"2rem",
-                            bgcolor:"rgba(0,0,0,0.85)"
+                            padding: "2rem",
+                            bgcolor: "rgba(0,0,0,0.85)"
                         }}
                         height={"100%"}
                     >
-                        third
+                        <Profile/>
                     </Grid>
                 </Grid>
-
-
-
-
-
             </>
         );
     };
-
-    WithLayout.displayName = `AppLayout(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`;
-
-    return WithLayout;
 };
 
 export default AppLayout;
