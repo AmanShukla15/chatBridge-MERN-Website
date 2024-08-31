@@ -40,7 +40,7 @@ export const sampleNotifications = [
         _id: "1",
     },
     {
-        sender:{
+        sender: {
             avatar: [
                 "https://www.w3schools.com/howto/img_avatar2.png",
             ],
@@ -49,3 +49,38 @@ export const sampleNotifications = [
         _id: "2",
     },
 ]
+
+export const sampleMessage = [
+    {
+        attachments:[
+            {
+                public_id: "assad",
+                url: "https://www.w3schools.com/howto/img_avatar2.png",
+            },
+        ],
+        content: "Hii Everyone this is dummy message",
+        _id: "adflkjafjfal",
+        sender:{
+            _id:"user._id",
+            name: "aman",
+        },
+        chat: "chatId",
+        createdAt: "2024-02-12T10:41:30.630Z",
+    },
+    {
+        attachments:[
+            {
+                public_id: "assad",
+                url: "https://www.w3schools.com/howto/img_avatar2.png",
+            },
+        ],
+        content: "Hello",
+        _id: "aldfajl",
+        sender:{
+            _id:"aljf",
+            name: "aman",
+        },
+        chat: "chatId",
+        createdAt: "2024-02-12T10:41:30.630Z",
+    },
+];

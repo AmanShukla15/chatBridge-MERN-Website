@@ -13,8 +13,6 @@ const NewGroup = () => {
 
   const selectMemberHandler = (id) => {
 
-    setMembers((prev) => prev.map((user) => user._id === id ? { ...user, isAdded: !user.isAdded } : user))   
-
     setSelectedMembers((prev) =>
       prev.includes(id)
         ? prev.filter((currElement) => currElement !== id)
@@ -22,10 +20,12 @@ const NewGroup = () => {
     );
   }
 
-  console.log(selectedMembers);
-
   const submitHandler = () => {
     console.log("submitHandler");
+  }
+
+  const closeHandler=()=>{
+    console.log("Close handler")
   }
   return (
     <Dialog open>
