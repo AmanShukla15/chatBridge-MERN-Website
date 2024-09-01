@@ -7,17 +7,21 @@ const AvatarCard = ({ avatar = [], max = 4 }) => {
         <AvatarGroup max={max}>
             {
                 avatar.map((i, index) => (
-                    <Box key={index} width={"5rem"} height={"3rem"}>
+                    <Box
+                        key={index}
+                        width={"5rem"}
+                        height={"3rem"}
+                    >
                         <Avatar
                             key={index}
-                            src={ transformImage(i)}
+                            src={transformImage(i)}
                             alt={`Avatar ${index}`}
                             sx={{
                                 width: "3rem",
                                 height: "3rem",
                                 position: "absolute",
                                 left: {
-                                    xs: `${0.5+index}rem`,
+                                    xs: `${0.5 + index}rem`,
                                     sm: `${index}rem`,
                                 }
                             }}

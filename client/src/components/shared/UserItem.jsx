@@ -1,10 +1,10 @@
 import { Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
 import { Avatar, IconButton, ListItem, Stack, Typography } from '@mui/material';
-import React from 'react'
+import React from 'react';
 
-const UserItem = ({ user, handler, handlerIsLoading}) => {
+const UserItem = ({ user, handler, handlerIsLoading, isAdded}) => {
 
-    const { name, _id, avatar, isAdded } = user;
+    const { name, _id, avatar } = user;
 
     return (
         <ListItem>
