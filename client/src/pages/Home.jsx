@@ -15,7 +15,7 @@ const Home = () => {
         variant="h5"
         textAlign={"center"}
       >
-        Selct a friend to chat
+        Select a friend to chat
       </Typography>
     </Box>
   );

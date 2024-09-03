@@ -1,12 +1,12 @@
-import { IconButton, Stack } from '@mui/material';
-import AppLayout from '../components/layout/AppLayout'
-import { Fragment, useRef } from 'react';
-import { grayColor, orange } from '../constants/color';
 import { AttachFile as AttachFileIcon, Send as SendIcon } from '@mui/icons-material';
-import { InputBox } from '../components/styles/StyledComponents';
+import { IconButton, Stack } from '@mui/material';
+import { Fragment, useRef } from 'react';
 import FileMenu from '../components/dialogs/FileMenu';
-import { sampleMessage } from '../constants/sampleData';
+import AppLayout from '../components/layout/AppLayout';
 import MessageComponent from '../components/shared/MessageComponent';
+import { InputBox } from '../components/styles/StyledComponents';
+import { grayColor, lightBlack, matBlack } from '../constants/color';
+import { sampleMessage } from '../constants/sampleData';
 
 
 const user = {
@@ -25,7 +25,7 @@ const Chat = () => {
         boxSizing={"border-box"}
         padding={"1rem"}
         spacing={"1rem"}
-        bgcolor={grayColor}
+        bgcolor={"rgba(128,128,128,0.2)"}
         height={"90%"}
         sx={{
           overflowX: "hidden",
@@ -33,8 +33,8 @@ const Chat = () => {
         }}
       >
         {
-          sampleMessage.map((i)=>(
-            <MessageComponent key={i._id} message={i} user={user}/>
+          sampleMessage.map((i) => (
+            <MessageComponent key={i._id} message={i} user={user} />
           ))
         }
       </Stack>
@@ -52,11 +52,11 @@ const Chat = () => {
           alignItems={"center"}
         >
           <IconButton
-           sx={{
-            position: "absolute",
-            left: "1.5rem", 
-            rotate: "30deg",
-           }}
+            sx={{
+              position: "absolute",
+              left: "1.5rem",
+              rotate: "30deg",
+            }}
           >
             <AttachFileIcon />
           </IconButton>
@@ -66,12 +66,12 @@ const Chat = () => {
           <IconButton
             type="submit"
             sx={{
-              bgcolor: orange,
-              color: "white",
+              color: matBlack,
               marginLeft: "1rem",
               padding: "0.5rem",
               "&:hover": {
-                bgcolor: "error.dark"
+                bgcolor: matBlack,
+                color: "white"
               }
             }}
           >

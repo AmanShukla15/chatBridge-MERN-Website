@@ -5,6 +5,7 @@ import ChatList from '../specific/ChatList';
 import { sampleChats } from '../../constants/sampleData';
 import { useParams } from 'react-router-dom';
 import Profile from '../specific/Profile';
+import { lightMatBlack } from '../../constants/color';
 
 const AppLayout = () => (WrappedComponent) => {
    
@@ -62,7 +63,7 @@ const AppLayout = () => (WrappedComponent) => {
                                 xs: "none", md: "block"
                             },
                             padding: "2rem",
-                            bgcolor: "rgba(0,0,0,0.85)"
+                            bgcolor: lightMatBlack,
                         }}
                         height={"100%"}
                     >

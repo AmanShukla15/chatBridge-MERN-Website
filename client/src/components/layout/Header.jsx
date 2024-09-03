@@ -1,12 +1,12 @@
+import { Add as AddIcon, Group as GroupIcon, Logout as LogoutIcon, Menu as MenuIcon, Notifications as NotificationIcon, Search as SearchIcon, Brightness7 as Brightness7Icon, Brightness4 as Brightness4Icon } from '@mui/icons-material'
 import { AppBar, Backdrop, Box, IconButton, Toolbar, Tooltip, Typography } from '@mui/material'
 import { lazy, Suspense, useState } from 'react'
-import { Add as AddIcon, Group as GroupIcon, Logout as LogoutIcon, Menu as MenuIcon, Search as SearchIcon, Notifications as NotificationIcon } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
-import {LayoutLoader} from './Loaders'
+import { lightBlack, matBlack } from '../../constants/color'
 
-const SearchDialog = lazy(()=> import("../specific/Search"))
-const NotificationDialog = lazy(()=> import("../specific/Notifications")) 
-const NewGroupDialog = lazy(()=> import("../specific/NewGroup"))
+const SearchDialog = lazy(() => import("../specific/Search"))
+const NotificationDialog = lazy(() => import("../specific/Notifications"))
+const NewGroupDialog = lazy(() => import("../specific/NewGroup"))
 
 const Header = () => {
 
@@ -16,6 +16,8 @@ const Header = () => {
     const [isSearch, setIsSearch] = useState(false);
     const [isNewGroup, setIsNewGroup] = useState(false);
     const [isNotification, setIsNotification] = useState(false);
+
+    const [darkMode, setDarkMode] = useState(false);
 
     const navigateToGroup = () => navigate("/groups")
 
@@ -30,6 +32,9 @@ const Header = () => {
     }
     const openNotification = () => {
         setIsNotification((prev) => !prev)
+    }
+    const toggleMode = () => {
+        setDarkMode((prev) => !prev)
     }
     const logoutHandler = () => {
         console.log("logoutHandler");
@@ -46,7 +51,7 @@ const Header = () => {
                 <AppBar
                     position="static"
                     sx={{
-                        bgcolor: "#25b09b",
+                        bgcolor: matBlack,
                     }}
                 >
                     <Toolbar>
@@ -83,6 +88,11 @@ const Header = () => {
                         />
                         <Box>
                             <IconBtn
+                                title={darkMode ? "light" : "dark"}
+                                icon={darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+                                onClick={toggleMode}
+                            />
+                            <IconBtn
                                 title={"Search"}
                                 icon={<SearchIcon />}
                                 onClick={openSearch}
@@ -115,7 +125,7 @@ const Header = () => {
             {
                 isSearch && (
                     <Suspense
-                        fallback={<Backdrop open/>}
+                        fallback={<Backdrop open />}
                     >
                         <SearchDialog />
                     </Suspense>
@@ -124,7 +134,7 @@ const Header = () => {
             {
                 isNotification && (
                     <Suspense
-                        fallback={<Backdrop open/>}
+                        fallback={<Backdrop open />}
                     >
                         <NotificationDialog />
                     </Suspense>
@@ -133,7 +143,7 @@ const Header = () => {
             {
                 isNewGroup && (
                     <Suspense
-                        fallback={<Backdrop open/>}
+                        fallback={<Backdrop open />}
                     >
                         <NewGroupDialog />
                     </Suspense>
@@ -150,6 +160,11 @@ const IconBtn = ({ title, icon, onClick }) => {
                 color="inherit"
                 size="large"
                 onClick={onClick}
+                sx={{
+                    '&:hover': {
+                        backgroundColor: lightBlack,
+                    },
+                }}
             >
                 {icon}
             </IconButton>

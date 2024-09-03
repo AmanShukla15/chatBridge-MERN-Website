@@ -1,6 +1,7 @@
-import React, { memo } from 'react'
-import { Link } from '../styles/StyledComponents'
 import { Box, Stack, Typography } from '@mui/material'
+import React, { memo } from 'react'
+import { lightMatBlack } from '../../constants/color'
+import { Link } from '../styles/StyledComponents'
 import AvatarCard from './AvatarCard'
 
 
@@ -16,12 +17,12 @@ const ChatItem = ({
     handleDeleteChat,
 }) => {
     return (
-        <Link 
-        sx={{
-            padding:"0",
-        }}
-        to={`/chat/${_id}`}
-        onContextMenu={(e)=>handleDeleteChat(e, _id, groupChat)}
+        <Link
+            sx={{
+                padding: "0",
+            }}
+            to={`/chat/${_id}`}
+            onContextMenu={(e) => handleDeleteChat(e, _id, groupChat)}
         >
             <div
                 style={{
@@ -29,11 +30,14 @@ const ChatItem = ({
                     alignItems: "center",
                     gap: "1rem",
                     padding: "1rem",
-                    backgroundColor: sameSender ? "black" : "unset",
+                    backgroundColor: sameSender ? lightMatBlack : "unset",
                     color: sameSender ? "white" : "unset",
                     position: "relative",
+                    borderBottom: "1px solid rgba(128, 128, 128, 0.3)",
+                    transition: "background-Color 0.5s"
+
                 }}>
-               <AvatarCard avatar={avatar} />
+                <AvatarCard avatar={avatar} />
                 <Stack>
                     <Typography>{name}</Typography>
                     {
@@ -46,7 +50,7 @@ const ChatItem = ({
                 </Stack>
 
                 {
-                    isOnline&& <Box sx={
+                    isOnline && <Box sx={
                         {
                             width: "10px",
                             height: "10px",
@@ -57,7 +61,7 @@ const ChatItem = ({
                             right: "1rem",
                             tranform: "translateY(-50%)"
                         }
-                    }/>
+                    } />
                 }
 
             </div>

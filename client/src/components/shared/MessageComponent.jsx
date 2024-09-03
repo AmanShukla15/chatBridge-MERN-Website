@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import React, { memo } from 'react'
-import { lightGray } from '../../constants/color';
+import { lightBlack, matBlack } from '../../constants/color';
 import moment from 'moment';
 import { fileFormat } from '../../lib/features';
 import RenderAttachment from './RenderAttachment';
@@ -27,7 +27,7 @@ const MessageComponent = ({ message, user }) => {
             {
                 !sameSender && (
                     <Typography
-                        color={lightGray}
+                        color={matBlack}
                         fontWeight={"800"}
                         variant="caption"
                     >

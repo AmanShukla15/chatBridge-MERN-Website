@@ -3,9 +3,10 @@ import { Backdrop, Box, Button, Drawer, Grid, IconButton, Stack, TextField, Tool
 import React, { lazy, memo, Suspense, useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from "react-router-dom"
 import AvatarCard from "../components/shared/AvatarCard"
+import UserItem from "../components/shared/UserItem"
 import { Link } from "../components/styles/StyledComponents"
-import { matBlack } from "../constants/color"
-import { sampleChats } from "../constants/sampleData"
+import { lightBlack, matBlack } from "../constants/color"
+import { sampleChats, sampleUsers } from "../constants/sampleData"
 const ConfirmDeleteDialog = lazy(() =>
   import("../components/dialogs/ConfirmDeleteDialog")
 );
@@ -55,11 +56,15 @@ const Groups = () => {
     console.log("deleteHandler")
     closeConfirmDeleteHandler();
   }
+  const removeMemberHandler = (id) => {
+    console.log("Remove Member ", id);
+  }
 
   useEffect(() => {
-    setGroupName(`Group Name ${chatId}`);
-    setGroupNameUpdatedValue(`Group Name ${chatId}`);
-
+    if (chatId) {
+      setGroupName(`Group Name ${chatId}`);
+      setGroupNameUpdatedValue(`Group Name ${chatId}`);
+    }
     return () => {
       setGroupName("");
       setGroupNameUpdatedValue("");
@@ -93,10 +98,13 @@ const Groups = () => {
             position: "absolute",
             top: "2rem",
             left: "2rem",
-            bgcolor: matBlack,
-            color: "white",
+            border: "3px solid black",
+            borderRadius: "50%",
+            color: matBlack,
+            transition: 'background-color 0.3s, color 0.3s',
             ":hover": {
-              bgcolor: "rgba(0,0,0,0.7)"
+              backgroundColor: matBlack,
+              color: "white",
             }
           }}
           onClick={navigateBack}
@@ -228,6 +236,21 @@ const Groups = () => {
               overflow={"auto"}
             >
               {/* Members */}
+              {
+                sampleUsers.map((i) => (
+                  <UserItem
+                    user={i}
+                    key={i._id}
+                    isAdded
+                    styling={{
+                      boxShadow: "0 0 0.5rem rgba(0, 0, 0, 0.2)",
+                      padding: "1rem 2rem",
+                      borderRadius: "1rem",
+                    }}
+                    handler={removeMemberHandler}
+                  />
+                ))
+              }
 
             </Stack>
 
@@ -259,7 +282,7 @@ const Groups = () => {
           display: {
             xs: "block",
             sm: "none",
-          }
+          },
         }}
         open={isMobileMenuOpen}
         onClose={handleMobileClose}>
@@ -277,6 +300,10 @@ const Groups = () => {
 const GroupsList = ({ w = "100%", myGroups = [], chatId }) => (
   <Stack
     width={w}
+    sx={{
+      height: "100vh",
+      overflowY: "auto",
+    }}
   >
     {
       myGroups.length > 0 ? (
@@ -312,7 +339,17 @@ const GroupListItem = memo(({ group, chatId }) => {
         direction={"row"}
         spacing={"1rem"}
         alignItems={"center"}
+        padding={"1rem"}
+        borderBottom={"1px solid rgba(128, 128, 128, 0.5)"}
+        sx={{
+          '&:hover': {
+            backgroundColor: matBlack,
+            color: "white",
+            transition: 'background-color 0.5s',
+          },
+        }}
       >
+
         <AvatarCard avatar={avatar} />
         <Typography>
           {name}

@@ -17,6 +17,7 @@ export const VisuallyHiddenInput = styled("input")({
 export const Link = styled(LinkComponent)`
     text-decoration: none;
     color: inherit;
+    cursor: none;
     &:hover{
         background-color: rgba(0,0,0, 0.1);
     }
@@ -29,5 +30,5 @@ export const InputBox = styled("input")`
  outline: none;
  padding: 0 3rem;
  border-radius: 1.5rem;
- background-color: ${grayColor}
+ background-color: ${"rgba(128,128,128,0.2)"}
 `
