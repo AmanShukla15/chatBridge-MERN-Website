@@ -24,12 +24,12 @@ export const adminTabs = [
     },
     {
         name: "Users",
-        path: "/admin/users-management",
+        path: "/admin/users",
         icon: <ManageAccountsIcon />,
     },
     {
         name: "Chats",
-        path: "/admin/chats-management",
+        path: "/admin/chats",
         icon: <GroupsIcon />,
     },
     {
@@ -168,7 +168,7 @@ const AdminLayout = ({ children }) => {
             </Grid>
 
             <Drawer open={isMobile} onClose={handleClose}>
-                <Sidebar w="50vw" />
+                <Sidebar w="70vw" />
             </Drawer>
 
 

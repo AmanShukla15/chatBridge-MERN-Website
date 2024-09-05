@@ -64,7 +64,7 @@ const CustomCursor = () => {
                         margin: 0;
                         padding: 0;
                         box-sizing: border-box;
-                        cursor:none;
+                        cursor: none;
                     }
                     html {
                         height: 100%;
@@ -89,6 +89,11 @@ const CustomCursor = () => {
                     }
                     .custom-cursor--link {
                         transform: translate(-50%, -50%) scale(1);
+                    }
+                    @media (max-width: 1024px) {
+                        .custom-cursor {
+                            display: none;
+                        }
                     }
                 `}
             </style>
