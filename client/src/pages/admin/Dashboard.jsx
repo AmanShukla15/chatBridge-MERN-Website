@@ -5,6 +5,7 @@ import React from 'react'
 import AdminLayout from '../../components/layout/AdminLayout'
 import { CurveButton, SearchField } from '../../components/styles/StyledComponents'
 import { matBlack } from '../../constants/color'
+import { DoughnutChart, LineChart } from '../../components/specific/Charts'
 
 const Dashboard = () => {
 
@@ -88,9 +89,20 @@ const Dashboard = () => {
 
 
         <Stack
-          direction={"row"}
-          spacing={"2rem"}
+          direction={{
+            xs: "column",
+            lg: "row",
+          }}
+          
           flexWrap={"wrap"}
+          justifyContent={"center"}
+          alignItems={{
+            xs: "center",
+            lg: "stretch"
+          }}
+          sx={{
+            gap:"2rem"
+          }}
         >
           <Paper
             elevation={3}
@@ -99,7 +111,6 @@ const Dashboard = () => {
               borderRadius: "1rem",
               width: "100%",
               maxWidth: "45rem",
-              height: "25rem",
             }}
           >
             <Typography
@@ -108,7 +119,7 @@ const Dashboard = () => {
             >
               Last Messages
             </Typography>
-            {"Chat"}
+            <LineChart value={[23, 34, 34, 45, 54, 56, 65]} />
           </Paper>
 
           <Paper
@@ -123,10 +134,9 @@ const Dashboard = () => {
               position: "relative",
               width: "100%",
               maxWidth: "25rem",
-              height: "25rem",
             }}
           >
-            {"Dougnut Chart"}
+            <DoughnutChart labels={["Single Chat", "Group Chats"]} value={[23, 66]}/>
 
             <Stack
               position={"absolute"}
