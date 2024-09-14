@@ -1,7 +1,7 @@
 import { compare } from "bcrypt";
 import { User } from "../models/user.js";
-import { sendToken } from "../utils/features.js";
-import { ErrorHandler } from "../utils/utility";
+import { cookieOptions, sendToken } from "../utils/features.js";
+import { ErrorHandler } from "../utils/utility.js";
 import { TryCatch } from "../middlewares/error.js";
 
 // sign up and save in cookie
@@ -21,7 +21,7 @@ const newUser = TryCatch(async (req, res, next) => {
         public_id: "lsaj",
         url: "lkjfadl",
     };
-
+    
     const user = await User.create({
         name,
         bio,
@@ -29,9 +29,9 @@ const newUser = TryCatch(async (req, res, next) => {
         password,
         avatar,
     })
-
+    
     sendToken(res, user, 201, "User created");
-
+    
 })
 
 // Login
@@ -71,9 +71,35 @@ const logout = TryCatch(async (req, res) => {
         });
 });
 
+const searchUser = TryCatch(async (req, res) => {
+    const { name = "" } = req.query;
+  
+    const myChats = await Chat.find({ groupChat: false, members: req.user });
+  
+    const allUsersFromMyChats = myChats.flatMap((chat) => chat.members);
+  
+    const allUsersExceptMeAndFriends = await User.find({
+      _id: { $nin: allUsersFromMyChats },
+      name: { $regex: name, $options: "i" },
+    });
+  
+    const users = allUsersExceptMeAndFriends.map(({ _id, name, avatar }) => ({
+      _id,
+      name,
+      avatar: avatar.url,
+    }));
+  
+    return res.status(200).json({
+      success: true,
+      users,
+    });
+  });
+  
+
 export {
     login,
     newUser,
     getMyProfile,
-    logout
+    logout,
+    searchUser
 }

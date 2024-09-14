@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
 
 const cookieOptions = {
   maxAge: 15 * 24 * 60 * 60 * 1000,
@@ -15,7 +16,7 @@ const connectDB = async (uri) => {
       useUnifiedTopology: true,
     });
     console.log(`Connected to DB: ${data.connection.host}`);
-  } catch (err) {  
+  } catch (err) {
     console.error("Failed to connect to DB", err);
     throw err;
   }
@@ -31,7 +32,13 @@ const sendToken = (res, user, code, message) => {
   });
 };
 
+const emitEvent = (req, event, users, data) => {
+  console.log("Emmiting Event");
+}
+
 export {
   connectDB,
   sendToken,
+  cookieOptions,
+  emitEvent,
 }
