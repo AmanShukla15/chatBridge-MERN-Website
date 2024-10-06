@@ -10,7 +10,6 @@ const Link = styled(LinkComponent)`
     border-radius: 2rem;
     padding: 1rem 2rem;
     color: black;
-    cursor: none;
     &:hover{
         color: rgba(0,0,0,0.54);
     }

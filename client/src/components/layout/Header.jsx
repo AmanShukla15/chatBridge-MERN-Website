@@ -3,6 +3,12 @@ import { AppBar, Backdrop, Box, IconButton, Toolbar, Tooltip, Typography } from 
 import { lazy, Suspense, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { lightBlack, matBlack } from '../../constants/color'
+import { userNotExists } from '../../redux/reducers/auth'
+import axios from 'axios'
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { server } from '../../constants/config'
+import { setIsDarkMode, setIsMobile, setIsNewGroup, setIsNotification, setIsSearch } from '../../redux/reducers/misc'
 
 const SearchDialog = lazy(() => import("../specific/Search"))
 const NotificationDialog = lazy(() => import("../specific/Notifications"))
@@ -11,33 +17,36 @@ const NewGroupDialog = lazy(() => import("../specific/NewGroup"))
 const Header = () => {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const [isMobile, setIsMobile] = useState(false);
-    const [isSearch, setIsSearch] = useState(false);
-    const [isNewGroup, setIsNewGroup] = useState(false);
-    const [isNotification, setIsNotification] = useState(false);
+    const { isSearch, isNotification, isNewGroup } = useSelector(
+        (state) => state.misc
+    );
 
-    const [darkMode, setDarkMode] = useState(false);
+    const { isDarkMode } = useSelector((state) => state.misc);
 
     const navigateToGroup = () => navigate("/groups")
 
-    const handleMoblie = () => {
-        setIsMobile((prev) => !prev)
-    }
-    const openSearch = () => {
-        setIsSearch((prev) => !prev);
-    }
-    const openNewGroup = () => {
-        setIsNewGroup((prev) => !prev)
-    }
+
+    const handleMobile = () => dispatch(setIsMobile(true))
+    const openSearch = () => dispatch(setIsSearch(true));
+    const openNewGroup = () => dispatch(setIsNewGroup(true));
     const openNotification = () => {
-        setIsNotification((prev) => !prev)
+        dispatch(setIsNotification(true));
     }
-    const toggleMode = () => {
-        setDarkMode((prev) => !prev)
-    }
-    const logoutHandler = () => {
-        console.log("logoutHandler");
+    const toggleMode = () => dispatch(setIsDarkMode(!isDarkMode));
+    
+
+    const logoutHandler = async () => {
+        try {
+            const { data } = await axios.get(`${server}/api/v1/user/logout`, {
+                withCredentials: true,
+            });
+            dispatch(userNotExists());
+            toast.success(data.message);
+        } catch (error) {
+            toast.error(error?.response?.data?.message || "Something went wrong");
+        }
     }
 
     return (
@@ -76,7 +85,7 @@ const Header = () => {
                         >
                             <IconButton
                                 color="inherit"
-                                onClick={handleMoblie}
+                                onClick={handleMobile}
                             >
                                 <MenuIcon />
                             </IconButton>
@@ -88,8 +97,8 @@ const Header = () => {
                         />
                         <Box>
                             <IconBtn
-                                title={darkMode ? "light" : "dark"}
-                                icon={darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+                                title={isDarkMode ? "light" : "dark"}
+                                icon={isDarkMode ? <Brightness7Icon /> : <Brightness4Icon />}
                                 onClick={toggleMode}
                             />
                             <IconBtn

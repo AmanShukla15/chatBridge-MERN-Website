@@ -8,6 +8,7 @@ import { usernameValidator } from '../utils/validators';
 import { useDispatch } from 'react-redux';
 import { server } from '../constants/config';
 import axios from 'axios';
+import { userExists } from '../redux/reducers/auth';
 
 const Login = () => {
 
@@ -84,7 +85,7 @@ const Login = () => {
         `${server}/api/v1/user/new`,
         formData,
         config
-      );
+      );  
 
       dispatch(userExists(data.user));
       toast.success(data.message, {

@@ -14,6 +14,7 @@ import userRoute from "./routes/user.js";
 import { NEW_MESSAGE, NEW_MESSAGE_ALERT } from "./constants/events.js";
 import { Message } from "./models/message.js";
 import { getSockets } from "./lib/helper.js";
+import { v2 as cloudinary } from "cloudinary";
 
 
 dotenv.config({
@@ -29,6 +30,12 @@ const userSocketIDs = new Map();
 
 connectDB(mongoURI);
 
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+  });
+  
 
 const app = express();
 const server = createServer(app);
