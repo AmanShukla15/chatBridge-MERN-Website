@@ -3,8 +3,13 @@ import React, { useState } from 'react'
 import { sampleUsers } from '../../constants/sampleData'
 import UserItem from '../shared/UserItem'
 import { useInputValidation } from '6pp'
+import { useDispatch, useSelector } from 'react-redux'
+import { setIsNewGroup } from '../../redux/reducers/misc'
 
 const NewGroup = () => {
+  const { isNewGroup } = useSelector((state) => state.misc);
+  const dispatch = useDispatch();
+
 
   const groupName = useInputValidation("")
 
@@ -24,11 +29,11 @@ const NewGroup = () => {
     console.log("submitHandler");
   }
 
-  const closeHandler=()=>{
-    console.log("Close handler")
-  }
+  const closeHandler = () => {
+    dispatch(setIsNewGroup(false));
+  };
   return (
-    <Dialog open>
+    <Dialog onClose={closeHandler} open={isNewGroup}>
       <Stack
         p={{
           xs: "1rem",

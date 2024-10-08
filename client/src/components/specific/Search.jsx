@@ -34,7 +34,6 @@ const Search = () => {
       searchUser(search.value)
         .then(({ data }) => setUsers(data.users))
         .catch((e) => console.log(e));
-        console.log("data ", users)
     }, 1000);
 
     return () => {

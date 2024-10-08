@@ -105,7 +105,7 @@ const AppLayout = () => (WrappedComponent) => {
                         }}
                         height={"100%"}
                     >
-                        <Profile />
+                        <Profile user={user}/>
                     </Grid>
                 </Grid>
             </>

@@ -1,42 +1,62 @@
-import { Avatar, Button, Dialog, DialogTitle, ListItem, Stack, Typography } from '@mui/material'
+import { Avatar, Button, Dialog, DialogTitle, ListItem, Skeleton, Stack, Typography } from '@mui/material'
 import React, { memo } from 'react'
 import { sampleNotifications } from '../../constants/sampleData'
+import { useDispatch, useSelector } from 'react-redux';
+import { useAcceptFriendRequestMutation, useGetNotificationsQuery } from '../../redux/api/api';
+import { useAsyncMutation, useErrors } from '../../hooks/hook';
+import { setIsNotification } from '../../redux/reducers/misc';
+import { transformImage } from '../../lib/features';
 
 const Notifications = () => {
+  const { isNotification } = useSelector((state) => state.misc);
 
-  const friendRequestHandler = ({ _id, accept }) => {
-    console.log("friendRequestHandler");
-  }
+  const dispatch = useDispatch();
+
+  const { isLoading, data, error, isError } = useGetNotificationsQuery();
+
+  const [acceptRequest] = useAsyncMutation(useAcceptFriendRequestMutation);
+
+  const friendRequestHandler = async ({ _id, accept }) => {
+    dispatch(setIsNotification(false));
+    await acceptRequest("Accepting...", { requestId: _id, accept });
+  };
+
+  const closeHandler = () => dispatch(setIsNotification(false));
+
+  useErrors([{ error, isError }]);
 
   return (
-    <Dialog open>
+    <Dialog open={isNotification} onClose={closeHandler}>
       <Stack
         p={{
           xs: "1rem",
           sm: "2rem"
         }}
-        maxWidth={"25rem"}
+        // maxWidth={"25rem"}
       >
         <DialogTitle>
           Notifications
         </DialogTitle>
+
         {
-          sampleNotifications.length > 0 ?
-            (
-              sampleNotifications.map(({ sender, _id }) => <NotificationItem
-                sender={sender}
-                _id={_id}
-                handler={friendRequestHandler}
-                key={_id}
-              />)
-            )
-            :
-            (
-              <Typography textAlign={"center"}>
-                0 notifications
-              </Typography>
-            )
-        }
+          isLoading ? (
+          <Skeleton />
+        ) : (
+          <>
+            {data?.allRequests.length > 0 ? (
+              data?.allRequests?.map(({ sender, _id }) => (
+                <NotificationItem
+                  sender={sender}
+                  _id={_id}
+                  handler={friendRequestHandler}
+                  key={_id}
+                />
+              ))
+            ) : (
+              <Typography textAlign={"center"}>0 notifications</Typography>
+            )}
+          </>
+        )}
       </Stack>
     </Dialog>
   )
@@ -52,7 +72,7 @@ const NotificationItem = memo(({ sender, _id, handler }) => {
         spacing={"1rem"}
         width={"100%"}
       >
-        <Avatar />
+        <Avatar src={transformImage(avatar)}/>
 
         <Typography
           variant="body1"
