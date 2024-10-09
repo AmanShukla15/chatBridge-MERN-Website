@@ -15,6 +15,8 @@ import { NEW_MESSAGE, NEW_MESSAGE_ALERT } from "./constants/events.js";
 import { Message } from "./models/message.js";
 import { getSockets } from "./lib/helper.js";
 import { v2 as cloudinary } from "cloudinary";
+import { corsOptions } from "./constants/config.js";
+import { socketAuthenticator } from "./middlewares/auth.js";
 
 
 dotenv.config({
@@ -34,19 +36,21 @@ cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
-  });
-  
+});
+
 
 const app = express();
 const server = createServer(app);
-const io = new Server(server, {});
+const io = new Server(server, {
+    cors: corsOptions,
+});
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
     origin: [
-        "http://localhost:5173", 
-        "http://localhost:4173", 
+        "http://localhost:5173",
+        "http://localhost:4173",
         process.env.CLIENT_URL
     ],
     credentials: true,
@@ -60,14 +64,21 @@ app.get("/", (req, res) => {
     res.send("Hello world")
 })
 
-io.use((socket, next) => { })
+io.use((socket, next) => {
+    cookieParser()(
+        socket.request,
+        socket.request.res,
+        async (err) => await socketAuthenticator(err, socket, next)
+    );
+})
 
 io.on("connection", (socket) => {
 
     const user = socket.user;
+
     userSocketIDs.set(user._id.toString(), socket.id);
 
-    console.log("user connected", socket.id);
+    console.log("user connected", userSocketIDs);
 
     socket.on(NEW_MESSAGE, async ({ chatId, members, message }) => {
         const messageForRealTime = {

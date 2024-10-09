@@ -11,6 +11,7 @@ import { useMyChatsQuery } from '../../redux/api/api';
 import { useState } from 'react';
 import { setIsMobile } from '../../redux/reducers/misc';
 import { useErrors } from '../../hooks/hook';
+import { getSocket } from '../../socket';
 
 const AppLayout = () => (WrappedComponent) => {
 
@@ -20,6 +21,7 @@ const AppLayout = () => (WrappedComponent) => {
         const dispatch = useDispatch();
 
         const chatId = params.chatId;
+        const socket = getSocket();
 
         const [onlineUsers, setOnlineUsers] = useState([]);
 
@@ -89,7 +91,7 @@ const AppLayout = () => (WrappedComponent) => {
                         lg={6}
                         height={"100%"}
                     >
-                        <WrappedComponent {...props} />
+                        <WrappedComponent {...props} chatId={chatId} user={user} />
                     </Grid>
 
                     <Grid
@@ -105,7 +107,7 @@ const AppLayout = () => (WrappedComponent) => {
                         }}
                         height={"100%"}
                     >
-                        <Profile user={user}/>
+                        <Profile user={user} />
                     </Grid>
                 </Grid>
             </>
