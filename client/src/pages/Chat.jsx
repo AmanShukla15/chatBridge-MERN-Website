@@ -37,6 +37,11 @@ const Chat = ({ chatId, user }) => {
 
   const members = chatDetails?.data?.chat?.members;
 
+
+  const messageOnChange = (e) => {
+    setMessage(e.target.value);
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -44,6 +49,7 @@ const Chat = ({ chatId, user }) => {
 
     // Emitting the message to the server
     socket.emit(NEW_MESSAGE, { chatId, members, message });
+  
     setMessage("");
   };
 
@@ -95,7 +101,11 @@ const Chat = ({ chatId, user }) => {
               <AttachFileIcon />
             </IconButton>
 
-            <InputBox placeholder='Message' />
+            <InputBox
+              placeholder='Message'
+              value={message}
+              onChange={messageOnChange} 
+            />
 
             <IconButton
               type="submit"

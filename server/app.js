@@ -78,7 +78,7 @@ io.on("connection", (socket) => {
 
     userSocketIDs.set(user._id.toString(), socket.id);
 
-    console.log("user connected", userSocketIDs);
+    console.log(userSocketIDs);
 
     socket.on(NEW_MESSAGE, async ({ chatId, members, message }) => {
         const messageForRealTime = {
@@ -123,4 +123,4 @@ server.listen(port, () => {
     console.log(`Server is running on port ${port} in ${envMode} Mode`)
 })
 
-export { adminSecretKey, envMode };
+export { adminSecretKey, envMode, userSocketIDs };
