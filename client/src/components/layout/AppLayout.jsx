@@ -8,10 +8,13 @@ import Profile from '../specific/Profile';
 import { lightMatBlack } from '../../constants/color';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMyChatsQuery } from '../../redux/api/api';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { setIsMobile } from '../../redux/reducers/misc';
-import { useErrors } from '../../hooks/hook';
+import { useErrors, useSocketEvents } from '../../hooks/hook';
 import { getSocket } from '../../socket';
+import { NEW_MESSAGE_ALERT, NEW_REQUEST, ONLINE_USERS, REFETCH_CHATS } from '../../constants/events';
+import { incrementNotification, setNewMessagesAlert } from '../../redux/reducers/chat';
+import { getOrSaveFromStorage } from '../../lib/features';
 
 const AppLayout = () => (WrappedComponent) => {
 
@@ -28,11 +31,15 @@ const AppLayout = () => (WrappedComponent) => {
         const { isMobile } = useSelector((state) => state.misc);
 
         const { user } = useSelector((state) => state.auth);
-        // const { newMessagesAlert } = useSelector((state) => state.chat);
+        const { newMessagesAlert } = useSelector((state) => state.chat);
 
         const { isLoading, data, isError, error, refetch } = useMyChatsQuery("");
 
         useErrors([{ isError, error }]);
+
+        useEffect(() => {
+            getOrSaveFromStorage({ key: NEW_MESSAGE_ALERT, value: newMessagesAlert });
+        }, [newMessagesAlert]);
 
         const handleDeleteChat = (e, _id, groupChat) => {
             e.preventDefault();
@@ -40,6 +47,36 @@ const AppLayout = () => (WrappedComponent) => {
         }
 
         const handleMobileClose = () => dispatch(setIsMobile(false))
+  
+        const newMessageAlertListener = useCallback(
+            (data) => {
+                if (data.chatId === chatId) return;
+                dispatch(setNewMessagesAlert(data));
+            },
+            [chatId]
+        );
+
+        const newRequestListener = useCallback(() => {
+            dispatch(incrementNotification());
+        }, [dispatch]);
+
+        const refetchListener = useCallback(() => {
+            refetch();
+            navigate("/");
+        }, [refetch, navigate]);
+
+        const onlineUsersListener = useCallback((data) => {
+            setOnlineUsers(data);
+        }, []);
+
+        const eventHandlers = {
+            [NEW_MESSAGE_ALERT]: newMessageAlertListener,
+            [NEW_REQUEST]: newRequestListener,
+            [REFETCH_CHATS]: refetchListener,
+            [ONLINE_USERS]: onlineUsersListener,
+        };
+
+        useSocketEvents(socket, eventHandlers);
 
 
         return (
@@ -56,6 +93,8 @@ const AppLayout = () => (WrappedComponent) => {
                             chats={data?.chats}
                             chatId={chatId}
                             handleDeleteChat={handleDeleteChat}
+                            newMessagesAlert={newMessagesAlert}
+                            onlineUsers={onlineUsers}
                         />
                     </Drawer>
                 )}
@@ -79,6 +118,8 @@ const AppLayout = () => (WrappedComponent) => {
                                 chats={data?.chats}
                                 chatId={chatId}
                                 handleDeleteChat={handleDeleteChat}
+                                newMessagesAlert={newMessagesAlert}
+                                onlineUsers={onlineUsers}
                             />
                         )}
                     </Grid>

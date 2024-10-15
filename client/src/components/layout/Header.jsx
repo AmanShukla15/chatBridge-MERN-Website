@@ -1,5 +1,5 @@
 import { Add as AddIcon, Group as GroupIcon, Logout as LogoutIcon, Menu as MenuIcon, Notifications as NotificationIcon, Search as SearchIcon, Brightness7 as Brightness7Icon, Brightness4 as Brightness4Icon } from '@mui/icons-material'
-import { AppBar, Backdrop, Box, IconButton, Toolbar, Tooltip, Typography } from '@mui/material'
+import { AppBar, Backdrop, Badge, Box, IconButton, Toolbar, Tooltip, Typography } from '@mui/material'
 import { lazy, Suspense, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { lightBlack, matBlack } from '../../constants/color'
@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { server } from '../../constants/config'
 import { setIsDarkMode, setIsMobile, setIsNewGroup, setIsNotification, setIsSearch } from '../../redux/reducers/misc'
+import { resetNotificationCount } from '../../redux/reducers/chat'
 
 const SearchDialog = lazy(() => import("../specific/Search"))
 const NotificationDialog = lazy(() => import("../specific/Notifications"))
@@ -23,6 +24,8 @@ const Header = () => {
         (state) => state.misc
     );
 
+    const { notificationCount } = useSelector((state) => state.chat);
+
     const { isDarkMode } = useSelector((state) => state.misc);
 
     const navigateToGroup = () => navigate("/groups")
@@ -33,9 +36,10 @@ const Header = () => {
     const openNewGroup = () => dispatch(setIsNewGroup(true));
     const openNotification = () => {
         dispatch(setIsNotification(true));
+        dispatch(resetNotificationCount());
     }
     const toggleMode = () => dispatch(setIsDarkMode(!isDarkMode));
-    
+
 
     const logoutHandler = async () => {
         try {
@@ -120,6 +124,7 @@ const Header = () => {
                                 title={"Notifications"}
                                 icon={<NotificationIcon />}
                                 onClick={openNotification}
+                                value={notificationCount}
                             />
                             <IconBtn
                                 title={"Logout"}
@@ -162,23 +167,21 @@ const Header = () => {
     )
 }
 
-const IconBtn = ({ title, icon, onClick }) => {
+const IconBtn = ({ title, icon, onClick, value }) => {
+
     return (
         <Tooltip title={title}>
-            <IconButton
-                color="inherit"
-                size="large"
-                onClick={onClick}
-                sx={{
-                    '&:hover': {
-                        backgroundColor: lightBlack,
-                    },
-                }}
-            >
-                {icon}
+            <IconButton color="inherit" size="large" onClick={onClick}>
+                {value ? (
+                    <Badge badgeContent={value} color="error">
+                        {icon}
+                    </Badge>
+                ) : (
+                    icon
+                )}
             </IconButton>
         </Tooltip>
-    )
-}
+    );
+};
 
 export default Header

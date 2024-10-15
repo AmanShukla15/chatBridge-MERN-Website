@@ -4,7 +4,7 @@ import { TryCatch } from "../middlewares/error.js";
 import { Chat } from "../models/chat.js";
 import { Message } from "../models/message.js";
 import { User } from "../models/user.js";
-import { deleteFilesFromCloudinary, emitEvent } from "../utils/features.js";
+import { deleteFilesFromCloudinary, emitEvent, uploadFilesToCloudinary } from "../utils/features.js";
 import { ErrorHandler } from "../utils/utility.js";
 
 
@@ -228,8 +228,7 @@ const sendAttachments = TryCatch(async (req, res, next) => {
     if (files.length < 1)
         return next(new ErrorHandler("Please provide attachments", 400));
 
-    // const attachments = await uploadFilesToCloudinary(files);
-    const attachments = [];
+    const attachments = await uploadFilesToCloudinary(files);
 
     const messageForDB = {
         content: "",

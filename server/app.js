@@ -11,7 +11,7 @@ import cors from "cors"
 import adminRoute from "./routes/admin.js";
 import chatRoute from "./routes/chat.js";
 import userRoute from "./routes/user.js";
-import { NEW_MESSAGE, NEW_MESSAGE_ALERT } from "./constants/events.js";
+import { NEW_MESSAGE, NEW_MESSAGE_ALERT, START_TYPING, STOP_TYPING } from "./constants/events.js";
 import { Message } from "./models/message.js";
 import { getSockets } from "./lib/helper.js";
 import { v2 as cloudinary } from "cloudinary";
@@ -44,6 +44,8 @@ const server = createServer(app);
 const io = new Server(server, {
     cors: corsOptions,
 });
+
+app.set("io", io);
 
 app.use(express.json());
 app.use(cookieParser());
@@ -111,6 +113,16 @@ io.on("connection", (socket) => {
             throw new Error(error);
         }
     })
+    
+    socket.on(START_TYPING, ({ members, chatId }) => {
+        const membersSockets = getSockets(members);
+        socket.to(membersSockets).emit(START_TYPING, { chatId });
+    });
+
+    socket.on(STOP_TYPING, ({ members, chatId }) => {
+        const membersSockets = getSockets(members);
+        socket.to(membersSockets).emit(STOP_TYPING, { chatId });
+    });
 
     socket.on("disconnect", () => {
         console.log("user disconnected");
