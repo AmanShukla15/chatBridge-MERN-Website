@@ -2,19 +2,19 @@ import Header from './Header';
 import Title from '../shared/Title';
 import { Drawer, Grid, Skeleton } from '@mui/material';
 import ChatList from '../specific/ChatList';
-import { sampleChats } from '../../constants/sampleData';
 import { useNavigate, useParams } from 'react-router-dom';
 import Profile from '../specific/Profile';
 import { lightMatBlack } from '../../constants/color';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMyChatsQuery } from '../../redux/api/api';
-import { useCallback, useEffect, useState } from 'react';
-import { setIsMobile } from '../../redux/reducers/misc';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { setIsDeleteMenu, setIsMobile, setSelectedDeleteChat } from '../../redux/reducers/misc';
 import { useErrors, useSocketEvents } from '../../hooks/hook';
 import { getSocket } from '../../socket';
 import { NEW_MESSAGE_ALERT, NEW_REQUEST, ONLINE_USERS, REFETCH_CHATS } from '../../constants/events';
 import { incrementNotification, setNewMessagesAlert } from '../../redux/reducers/chat';
 import { getOrSaveFromStorage } from '../../lib/features';
+import DeleteChatMenu from '../dialogs/DeleteChatMenu';
 
 const AppLayout = () => (WrappedComponent) => {
 
@@ -22,9 +22,10 @@ const AppLayout = () => (WrappedComponent) => {
         const params = useParams();
         const navigate = useNavigate();
         const dispatch = useDispatch();
+        const socket = getSocket();
 
         const chatId = params.chatId;
-        const socket = getSocket();
+        const deleteMenuAnchor = useRef(null);
 
         const [onlineUsers, setOnlineUsers] = useState([]);
 
@@ -42,12 +43,13 @@ const AppLayout = () => (WrappedComponent) => {
         }, [newMessagesAlert]);
 
         const handleDeleteChat = (e, _id, groupChat) => {
-            e.preventDefault();
-            console.log("HandleDeleteChat");
+            dispatch(setIsDeleteMenu(true));
+            dispatch(setSelectedDeleteChat({ chatId, groupChat }));
+            deleteMenuAnchor.current = e.currentTarget;
         }
 
         const handleMobileClose = () => dispatch(setIsMobile(false))
-  
+
         const newMessageAlertListener = useCallback(
             (data) => {
                 if (data.chatId === chatId) return;
@@ -83,6 +85,11 @@ const AppLayout = () => (WrappedComponent) => {
             <>
                 <Title />
                 <Header />
+
+                <DeleteChatMenu
+                    dispatch={dispatch}
+                    deleteMenuAnchor={deleteMenuAnchor}
+                />
 
                 {isLoading ? (
                     <Skeleton />

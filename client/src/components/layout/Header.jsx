@@ -111,7 +111,7 @@ const Header = () => {
                                 onClick={openSearch}
                             />
                             <IconBtn
-                                title={"New Grop"}
+                                title={"New Group"}
                                 icon={<AddIcon />}
                                 onClick={openNewGroup}
                             />

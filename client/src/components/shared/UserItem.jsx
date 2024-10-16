@@ -1,6 +1,6 @@
 import { Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
 import { Avatar, IconButton, ListItem, Stack, Typography } from '@mui/material';
-import React from 'react';
+import React, { memo } from 'react';
 import { transformImage } from '../../lib/features';
 
 const UserItem = ({ user, handler, handlerIsLoading, isAdded=false, styling={},}) => {
@@ -54,4 +54,4 @@ const UserItem = ({ user, handler, handlerIsLoading, isAdded=false, styling={},}
     )
 }
 
-export default UserItem
+export default memo(UserItem);

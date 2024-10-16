@@ -1,22 +1,21 @@
+import { useInfiniteScrollTop } from '6pp';
 import { AttachFile as AttachFileIcon, Send as SendIcon } from '@mui/icons-material';
 import { IconButton, Skeleton, Stack } from '@mui/material';
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import FileMenu from '../components/dialogs/FileMenu';
 import AppLayout from '../components/layout/AppLayout';
+import { TypingLoader } from '../components/layout/Loaders';
 import MessageComponent from '../components/shared/MessageComponent';
 import { InputBox } from '../components/styles/StyledComponents';
-import { grayColor, lightBlack, matBlack } from '../constants/color';
-import { sampleMessage } from '../constants/sampleData';
-import { useChatDetailsQuery, useGetMessagesQuery } from '../redux/api/api';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { getSocket } from '../socket';
+import { matBlack } from '../constants/color';
 import { ALERT, CHAT_JOINED, CHAT_LEAVED, NEW_MESSAGE, START_TYPING, STOP_TYPING } from '../constants/events';
 import { useErrors, useSocketEvents } from '../hooks/hook';
-import { useInfiniteScrollTop } from '6pp';
-import { setIsFileMenu } from '../redux/reducers/misc';
+import { useChatDetailsQuery, useGetMessagesQuery } from '../redux/api/api';
 import { removeNewMessagesAlert } from '../redux/reducers/chat';
-import { TypingLoader } from '../components/layout/Loaders';
+import { setIsFileMenu } from '../redux/reducers/misc';
+import { getSocket } from '../socket';
 
 
 const Chat = ({ chatId, user }) => {
