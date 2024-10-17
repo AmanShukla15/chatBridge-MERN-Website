@@ -22,7 +22,7 @@ const NotFound = () => {
                     variant="contained"
                     color="primary"
                     type="submit"
-                    onClick={() => navigate('/login')}
+                    onClick={() => navigate('/')}
                     sx={{
                         backgroundColor: "#00308F",
                         border: "2px solid #422800",

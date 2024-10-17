@@ -170,6 +170,7 @@ const Login = () => {
                     color="primary"
                     type="submit"
                     fullWidth
+                    disabled={isLoading}
                     sx={{
                       marginTop: "1rem",
                       backgroundColor: "#fbeee0",
@@ -371,6 +372,7 @@ const Login = () => {
                     color="primary"
                     type="submit"
                     fullWidth
+                    disabled={isLoading}
                     sx={{
                       marginTop: "1rem",
                       backgroundColor: "#fbeee0",
@@ -423,6 +425,7 @@ const Login = () => {
                     fullWidth
                     type="submit"
                     onClick={toggleLogin}
+                    disabled={isLoading}
                     sx={{
                       alignItems: "center",
                       background: "#FFFFFF",

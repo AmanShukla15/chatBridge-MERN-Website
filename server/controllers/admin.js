@@ -113,7 +113,7 @@ const allMessages = TryCatch(async (req, res) => {
   const messages = await Message.find({})
     .populate("sender", "name avatar")
     .populate("chat", "groupChat");
-
+  
   const transformedMessages = messages.map(
     ({ content, attachments, _id, sender, createdAt, chat }) => ({
       _id,
@@ -129,7 +129,7 @@ const allMessages = TryCatch(async (req, res) => {
       },
     })
   );
-
+  
   return res.status(200).json({
     success: true,
     messages: transformedMessages,

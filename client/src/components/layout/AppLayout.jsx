@@ -42,7 +42,7 @@ const AppLayout = () => (WrappedComponent) => {
             getOrSaveFromStorage({ key: NEW_MESSAGE_ALERT, value: newMessagesAlert });
         }, [newMessagesAlert]);
 
-        const handleDeleteChat = (e, _id, groupChat) => {
+        const handleDeleteChat = (e, chatId, groupChat) => {
             dispatch(setIsDeleteMenu(true));
             dispatch(setSelectedDeleteChat({ chatId, groupChat }));
             deleteMenuAnchor.current = e.currentTarget;

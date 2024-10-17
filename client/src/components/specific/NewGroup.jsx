@@ -28,7 +28,7 @@ const NewGroup = () => {
   }
 
   const submitHandler = () => {
-    console.log("name ", groupName.value)
+    
     if (!groupName.value) return toast.error("Group name is required");
 
     if (selectedMembers.length < 2)
